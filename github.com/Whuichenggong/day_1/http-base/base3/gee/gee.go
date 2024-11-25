@@ -26,7 +26,7 @@ func New() *Engine {
 // pattern路由路径
 func (engine *Engine) addRoute(method string, pattern string, handler HandlerFunc) {
 	//将HTTp方法和路径拼接成唯一一个键 作为路由表的router的键
-	//
+
 	key := method + "-" + pattern
 
 	//将处理函数 handler 存入路由表中，关联到对应的路由键。
@@ -53,7 +53,9 @@ func (engine *Engine) Run(addr string) (err error) {
 // 在 Go 的 HTTP 框架中，ServeHTTP 是 http.Handler 接口的约定方法。当你把 Engine 作为服务器的处理器传递时，它会被 ListenAndServe 自动调用。
 
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	key := req.URL.Path
+	// 按照 method + "-" + pattern 构造键
+	key := req.Method + "-" + req.URL.Path
+
 	if handler, ok := engine.router[key]; ok {
 		handler(w, req)
 	} else {
