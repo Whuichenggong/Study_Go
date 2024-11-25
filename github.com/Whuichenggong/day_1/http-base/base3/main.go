@@ -18,6 +18,10 @@ func main() {
 			fmt.Fprintf(w, "Header[%q] = %q\n", k, v)
 		}
 	})
+	// 注册 POST 路由
+	r.POST("/submit", func(w http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(w, "POST request received!")
+	})
 
 	r.Run(":9999")
 }
