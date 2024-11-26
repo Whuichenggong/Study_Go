@@ -13,6 +13,7 @@ func newRouter() *router {
 	return &router{handlers: make(map[string]HandlerFunc)}
 }
 
+// 当 启用gee.New()的时候会调用这个函数 r.GET方法会调用你传入到 addRouter中的你对应的路径的函数
 func (r *router) addRoute(method string, pattern string, handler HandlerFunc) {
 	log.Printf("Route %4s - %s", method, pattern)
 	key := method + "-" + pattern
